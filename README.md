@@ -211,8 +211,8 @@ RELEASE_ID_GREEN=green-release-1
 ```bash
 #!/bin/bash
 set -e
-BASE_URL="http://localhost:8080"
-BLUE_CHAOS_URL="http://localhost:8081/chaos"
+BASE_URL="http://44.192.99.207:8080"
+BLUE_CHAOS_URL="http://44.192.99.207:8081/chaos"
 TIMEOUT=10
 TEST_REQUESTS=20
 # ... full verification script as in main documentation ...
@@ -248,10 +248,10 @@ docker compose logs nginx
 ### 🧭 Step 9: Manual Testing
 
 ```bash
-curl -i http://localhost:8080/version
-curl -i http://localhost:8081/version
-curl -i http://localhost:8082/version
-curl http://localhost:8080/healthz
+curl -i http://44.192.99.207:8080/version
+curl -i http://44.192.99.207:8081/version
+curl -i http://44.192.99.207:8082/version
+curl http://44.192.99.207:8080/healthz
 ```
 
 ---
@@ -260,13 +260,13 @@ curl http://localhost:8080/healthz
 
 ```bash
 # Verify Blue is active
-curl -i http://localhost:8080/version | grep -i "x-app-pool"
+curl -i http://44.192.99.207:8080/version | grep -i "x-app-pool"
 
 # Induce chaos on Blue
-curl -X POST "http://localhost:8081/chaos/start?mode=error"
+curl -X POST "http://44.192.99.207:8081/chaos/start?mode=error"
 
 # Verify failover to Green
-curl -i http://localhost:8080/version | grep -i "x-app-pool"
+curl -i http://44.192.99.207:8080/version | grep -i "x-app-pool"
 ```
 
 ---
@@ -403,8 +403,8 @@ docker compose up -d app_green
 ### Smoke Test
 
 ```bash
-curl http://localhost:8082/version
-curl http://localhost:8082/healthz
+curl http://44.192.99.207:8082/version
+curl http://44.192.99.207/healthz
 ```
 
 ### Switch Traffic
