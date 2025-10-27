@@ -2,8 +2,8 @@
 set -e
 
 # Configuration
-NGINX_URL="http://localhost:8080/version"
-BLUE_CHAOS_URL="http://localhost:8081/chaos"
+NGINX_URL="http://44.192.99.207:8080/version"
+BLUE_CHAOS_URL="http://44.192.99.207:8081/chaos"
 TIMEOUT=10
 RETRIES=20
 EXPECTED_POOL="blue"
