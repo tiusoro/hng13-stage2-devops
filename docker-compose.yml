@@ -1,0 +1,45 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "${PORT:-8080}:80"
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/nginx.conf.template
+      - ./entrypoint.sh:/docker-entrypoint.d/entrypoint.sh
+    environment:
+      - ACTIVE_POOL=${ACTIVE_POOL:-blue}
+    command: /bin/sh -c "envsubst '\${ACTIVE_POOL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    depends_on:
+      - app_blue
+      - app_green
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+  app_blue:
+    image: ${BLUE_IMAGE:-yimikaade/wonderful:devops-stage-two}
+    ports:
+      - "8081:3000"
+    environment:
+      - RELEASE_ID=${RELEASE_ID_BLUE:-blue-release-1}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+  app_green:
+    image: ${GREEN_IMAGE:-yimikaade/wonderful:devops-stage-two}
+    ports:
+      - "8082:3000"
+    environment:
+      - RELEASE_ID=${RELEASE_ID_GREEN:-green-release-1}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+      
