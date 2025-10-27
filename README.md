@@ -211,8 +211,8 @@ RELEASE_ID_GREEN=green-release-1
 ```bash
 #!/bin/bash
 set -e
-BASE_URL="http://44.192.99.207:8080"
-BLUE_CHAOS_URL="http://44.192.99.207:8081/chaos"
+BASE_URL="http://localhost:8080"
+BLUE_CHAOS_URL="http://localhost:8081/chaos"
 TIMEOUT=10
 TEST_REQUESTS=20
 # ... full verification script as in main documentation ...
